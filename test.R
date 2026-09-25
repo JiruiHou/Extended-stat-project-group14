@@ -5,3 +5,4 @@ music_raw <- readLines("palestrina.txt")
 #(4)
 #music_raw[10:20,]
 #head(music_raw[10:20,])
+#model
