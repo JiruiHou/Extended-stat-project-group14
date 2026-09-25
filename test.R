@@ -1,8 +1,12 @@
-x<-3+3
-print
 
-## Data Cleaning
+#Change your own file address
+setwd("/Users/bensturm/Extended Statistical Programming Lab 1/Extended-stat-project-group14")
+music_raw <- readLines("palestrina.txt")
 
-## Model
+head(music_raw[10:20])
 
-## Generation
+#PSEUDOCODE
+
+#preprocessing
+
+#model
