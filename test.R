@@ -16,10 +16,10 @@ preprocess <- function(x){
   x <- x[!startsWith(x, "#")]
 
   #separate pieces on the || symbol, replacing current blank line  
-  x <- str_replace(x, "^$", "||")
+  x <- sub("^$", "||", x)
   
   #separate lines on the | symbol, replacing current newline (except last line, which I think we can detect by presence of a blank next line?)
-  not_end <- x != "| |"
+  not_end <- x != "||"
   next_is_end <- c(not_end[-1] == FALSE, FALSE)
   barline <- not_end & !next_is_end
   x[barline] <- paste(x[barline], "|")
@@ -29,7 +29,14 @@ preprocess <- function(x){
   tokens <- tokens[tokens != ""]
   return(tokens)
 }
-music_raw <- preprocess(music_raw)
+music_clean <- preprocess(music_raw)
+tail(music_clean, n = 10)
+notes <- unique(music_clean)
 
+match(x=music_clean, table = notes)
 
+#making matrices
+make_matrix <- function(tokens, end, mlag = 4) {
+  #this one is a little complicated, not sure how we should divide effort
+}
 #generation
