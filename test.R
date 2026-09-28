@@ -1,5 +1,5 @@
 install.packages("tidyverse")
-
+library(tidyverse)
 music_raw <- readLines("palestrina.txt")
 
 
@@ -16,12 +16,16 @@ preprocess <- function(x) {
   music_raw <- music_raw[startsWith(music_raw, "#")]
 
   #separate pieces on the || symbol, replacing current blank line  
-  str_replace(music_raw, "", "||")
+  x <- str_replace(x, "^$", "||")
   #separate lines on the | symbol, replacing current newline (except last line, which I think we can detect by presence of a blank next line?)
-
+  next_is_piece_end <- lead(x) =="||" | is.na(lead(x))
+  is_measure <- x != "||" & !next_is_piece_end
+  x[is_measure] <- paste0(x[is_measure]," |")
   #separate notes on the space symbol
+  return(x)
 }
-#model
+music_raw <- preprocess(music_raw)
+
 
 #generation
 
