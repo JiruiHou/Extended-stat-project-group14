@@ -16,7 +16,9 @@ preprocess <- function(x){
   x <- x[!startsWith(x, "#")]
 
   #separate pieces on the || symbol, replacing current blank line  
-  x <- sub("^$", "||", x)
+
+  x[x == ""] <- "||"
+
   
   #separate lines on the | symbol, replacing current newline (except last line, which I think we can detect by presence of a blank next line?)
   not_end <- x != "||"
