@@ -17,11 +17,11 @@ preprocess <- function(x){
 
   #separate pieces on the || symbol, replacing current blank line  
 
-  x[x == ""] <- "||"
+  x[x == ""] <- " ||"
 
   
   #separate lines on the | symbol, replacing current newline (except last line, which I think we can detect by presence of a blank next line?)
-  not_end <- x != "||"
+  not_end <- x != " ||"
   next_is_end <- c(not_end[-1] == FALSE, FALSE)
   barline <- not_end & !next_is_end
   x[barline] <- paste(x[barline], "|")
