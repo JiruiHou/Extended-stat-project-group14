@@ -42,15 +42,13 @@ make_matrix <- function(tokens, end, mlag = 4) {
   #for the sake of comprehensibility I'm going to feed columns into the vector that 
   #becomes our matrix one at a time
   temp <- vector()
-  increment <- 0
+  
   temptokens<- tokens
-  for (i in (mlag +1)) { #creates the token vector minus the last mlag elements, then iterates over shifted versions of tokens
-    if (increment >=1) {
-      temptokens <- tokens[-(1:increment)]
-    }
-  temp <-  append(temp, temptokens[1:(length(temptokens)-mlag)])
-   
-    increment <- increment + 1
+  for (i in (0:mlag)) { #creates the token vector minus the last mlag elements, then iterates over shifted versions of tokens
+    temptokens <- tokens[seq_along(tokens) > i]
+    temp <-  append(temp, temptokens[1:(length(temptokens)-(mlag-i))])
+    
+    
 }
   M <- matrix ( temp, nrow = length(tokens) -mlag, ncol = mlag + 1)
   print(M)
