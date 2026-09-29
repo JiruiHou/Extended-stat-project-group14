@@ -35,7 +35,7 @@ music_clean <- preprocess(music_raw)
 tail(music_clean, n = 10)
 notes <- unique(music_clean) #creates a table of unique notes
 
-match(x=music_clean, table = notes) # matches notes to their indices in the table of unique notes
+tokens <- match(x=music_clean, table = notes) # matches notes to their indices in the table of unique notes
 
 #making matrices
 make_matrix <- function(tokens, end, mlag = 4) {
@@ -44,15 +44,22 @@ make_matrix <- function(tokens, end, mlag = 4) {
   temp <- vector()
   
   temptokens<- tokens
-  for (i in (0:mlag)) { #creates the token vector minus the last mlag elements, then iterates over shifted versions of tokens
+  for (i in (0:mlag)) { #creates the token vector minus the last mlag elements, then iterates over shifted versions of the token vector
     temptokens <- tokens[seq_along(tokens) > i]
     temp <-  append(temp, temptokens[1:(length(temptokens)-(mlag-i))])
     
     
-}
+  }
   M <- matrix ( temp, nrow = length(tokens) -mlag, ncol = mlag + 1)
-  print(M)
+  #now we need to filter out the rows that contain the stop sequence
+  print("which1")
+  print(which(M[,1:mlag] == end, arr.ind = TRUE))
+
+  M <- M[rowSums(M[,1:mlag] == end) == 0,]
+  print("which2")
+  print(which(M[,1:mlag] == end, arr.ind = TRUE))
+  
   
 }
-make_matrix(notes, "||", 4)
+make_matrix(tokens, end = which(notes=="||"), 4)
 #generation
