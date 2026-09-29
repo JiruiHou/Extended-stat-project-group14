@@ -31,14 +31,30 @@ preprocess <- function(x){
   tokens <- tokens[tokens != ""]
   return(tokens)
 }
-music_clean <- preprocess(music_raw)
+music_clean <- preprocess(music_raw) 
 tail(music_clean, n = 10)
-notes <- unique(music_clean)
+notes <- unique(music_clean) #creates a table of unique notes
 
-match(x=music_clean, table = notes)
+match(x=music_clean, table = notes) # matches notes to their indices in the table of unique notes
 
 #making matrices
 make_matrix <- function(tokens, end, mlag = 4) {
-  #this one is a little complicated, not sure how we should divide effort
+  #for the sake of comprehensibility I'm going to feed columns into the vector that 
+  #becomes our matrix one at a time
+  temp <- vector()
+  increment <- 0
+  temptokens<- tokens
+  for (i in (mlag +1)) { #creates the token vector minus the last mlag elements, then iterates over shifted versions of tokens
+    if (increment >=1) {
+      temptokens <- tokens[-(1:increment)]
+    }
+  temp <-  append(temp, temptokens[1:(length(temptokens)-mlag)])
+   
+    increment <- increment + 1
 }
+  M <- matrix ( temp, nrow = length(tokens) -mlag, ncol = mlag + 1)
+  print(M)
+  
+}
+make_matrix(notes, "||", 4)
 #generation
