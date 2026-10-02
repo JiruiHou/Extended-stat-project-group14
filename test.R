@@ -40,7 +40,7 @@ tokens <- match(x=music_clean, table = notes) # matches notes to their indices i
 #making matrices
 make_matrix <- function(tokens, end, mlag = 4) {
   #for the sake of comprehensibility I'm going to feed columns into the vector that 
-  #becomes our matrix one at a time
+  #becomes our matrix one at a time. If we were doing this at much larger scale there might be a more efficient vectorized method
   temp <- vector()
   
   temptokens<- tokens
